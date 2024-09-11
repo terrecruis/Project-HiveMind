@@ -1,0 +1,30 @@
+# Ignora la directory node_modules, poiché le dipendenze verranno installate all'interno del container
+node_modules
+
+# Ignora le directory di output di Angular
+dist
+out-tsc
+
+# Ignora i file di configurazione dell'ambiente di sviluppo
+src/environments
+
+# Ignora i file e le cartelle di configurazione
+.git
+.gitignore
+docker-compose.yml
+Dockerfile
+README.md
+*.log
+*.md
+
+# Ignora eventuali backup o file di editor
+*.swp
+*.swo
+*.bak
+.idea
+.vscode
+*.iml
+
+# Ignora i file temporanei del sistema operativo
+.DS_Store
+Thumbs.db
