@@ -6,7 +6,6 @@ frontend/bazel-out
 
 # Express Compiled output
 backend/build
-backend/.env
 
 # Node Modules
 frontend/node_modules
@@ -72,16 +71,16 @@ testem.log
 /tsconfig.tsbuildinfo
 
 # Environment variables and settings
-frontend/.env
-backend/.env
-frontend/.env.local
-backend/.env.local
-frontend/.env.development.local
-backend/.env.development.local
-frontend/.env.test.local
-backend/.env.test.local
-frontend/.env.production.local
-backend/.env.production.local
+# frontend/.env (removed)
+# backend/.env (removed)
+# frontend/.env.local (removed)
+# backend/.env.local (removed)
+# frontend/.env.development.local (removed)
+# backend/.env.development.local (removed)
+# frontend/.env.test.local (removed)
+# backend/.env.test.local (removed)
+# frontend/.env.production.local (removed)
+# backend/.env.production.local (removed)
 
 # Temporary files
 tmp/
