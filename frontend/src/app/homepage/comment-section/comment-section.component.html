@@ -1,28 +1,56 @@
 <div class="container mx-auto px-4 py-6">
-  <div class="flex flex-col lg:flex-row">
+  <div class="flex flex-col lg:flex-row lg:h-auto">
+
     <!-- Dettaglio Idea -->
-    <div class="w-full lg:w-1/3 bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 mb-4 lg:mr-4">
-      <h2 class="text-2xl font-semibold text-gray-900 dark:text-white">{{ idea.title }}</h2>
-      <div [innerHTML]="convertedDescription" class="text-gray-700 dark:text-gray-300 mt-2"></div>
+    <div class="w-full lg:w-1/3 bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 mb-4 lg:mr-4 flex-shrink-0 transition-transform duration-300 hover:scale-105">
+      <div class="text-2xl font-bold text-gray-900 dark:text-white break-words">
+        <markdown [data]="idea.title"></markdown>
+      </div>
+      <p class="text-gray-600 dark:text-gray-400 mt-1">Creata da: <span class="font-semibold">{{ idea.UserUserName }}</span></p>
+      <hr class="border-gray-300 dark:border-gray-600 my-2">
+      <p class="font-semibold text-gray-900 dark:text-white mt-2">DESCRIZIONE:</p>
+      <div class="text-gray-700 dark:text-gray-300 mt-1 break-words">
+        <markdown [data]="idea.description"></markdown>
+      </div>
     </div>
 
-    <!-- Commenti -->
-    <div class="w-full lg:w-2/3 bg-white dark:bg-gray-800 shadow-md rounded-lg p-6">
+    <!-- Commenti e Form Aggiunta Commento -->
+    <div class="w-full lg:w-2/3 bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 flex flex-col">
       <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Commenti</h3>
 
-      <!-- Lista Commenti -->
-      <div *ngFor="let comment of idea.comments" class="comment mb-4 p-4 border rounded-lg dark:bg-gray-700 dark:border-gray-600">
-        <p class="text-gray-900 dark:text-white">{{ comment }}</p>
+      <!-- Sezione Commenti con Scroll -->
+      <div class="overflow-auto max-h-96 mb-4 border border-gray-300 dark:border-gray-600 rounded-lg p-4">
+        <div *ngIf="idea?.Comments?.length === 0" class="text-gray-600 dark:text-gray-400 text-center">
+          Non ci sono commenti per questa idea.
+        </div>
+
+        <div *ngFor="let comment of idea.Comments" class="comment mb-4 p-4 border rounded-lg dark:bg-gray-700 dark:border-gray-600 shadow-sm">
+          <p class="font-semibold text-gray-900 dark:text-white">
+            {{ comment.UserUserName }} 
+            <span class="text-gray-500 dark:text-gray-400 text-sm">({{ comment.createdAt | date: 'short' }})</span>
+          </p>
+          <p class="text-gray-900 dark:text-white">{{ comment.text }}</p>
+        </div>
       </div>
 
+      <hr class="border-gray-300 dark:border-gray-600 mb-4">
+
       <!-- Aggiungi Nuovo Commento -->
-      <form (ngSubmit)="addComment()" #commentForm="ngForm">
+      <form (ngSubmit)="submitComment()" #commentForm="ngForm">
         <label for="newComment" class="block text-gray-700 dark:text-gray-300">Aggiungi un commento</label>
-        <textarea id="newComment" [(ngModel)]="newComment" name="newComment" rows="3" class="w-full px-3 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" placeholder="Inserisci il tuo commento" required></textarea>
+        <textarea id="newComment" [(ngModel)]="newComment" name="newComment" rows="3" class="w-full px-3 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-600 transition duration-200" placeholder="Inserisci il tuo commento" required></textarea>
         <button type="submit" class="mt-2 bg-blue-600 text-white font-semibold px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-300 focus:outline-none">
           Invia Commento
         </button>
       </form>
     </div>
+  </div>
+
+  <!-- Pulsante Torna Indietro con Freccia -->
+  <div class="mt-4 flex items-center justify-start">
+    <button (click)="goBack()" class="bg-gray-300 text-gray-800 font-semibold px-3 py-2 rounded-lg hover:bg-gray-400 transition duration-300 text-sm flex items-center shadow">
+      <i class="fas fa-arrow-left mr-2"></i>
+      Torna Indietro
+    </button>
   </div>
 </div>

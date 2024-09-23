@@ -24,13 +24,13 @@ export const routes: Routes = [
     path: "comment-section/:id",
     component: CommentSectionComponent,
     title: "Comment Section",
-    // canActivate: [authGuard]  // Inserisci un guard se necess
+    canActivate: [authGuard]  // Inserisci un guard se necess
   },
   {
     path: "idea-creation-form",
     component: IdeaCreationFormComponent,
     title: "Idea Creation Form",
-    // canActivate: [authGuard]  // Inserisci un guard se necessario
+    canActivate: [authGuard]  // Inserisci un guard se necessario
   },
   {
     path: "",  // Path per la welcome page
@@ -41,7 +41,7 @@ export const routes: Routes = [
     path: "profile",
     component: ProfileComponent,
     title: "profile",
-    // canActivate: [authGuard]  // Inserisci un guard se necessario
+    canActivate: [authGuard]  // Inserisci un guard se necessario
   },
   {
     path: "login",

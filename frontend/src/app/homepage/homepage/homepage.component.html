@@ -1,26 +1,30 @@
 <header class="bg-white shadow-md py-4 border-b border-gray-200 dark:bg-gray-900 dark:border-gray-700">
-  <div class="container mx-auto flex justify-center">
+  <div class="container mx-auto flex flex-col items-center">
     <!-- Filtri Idee -->
-    <div class="grid grid-cols-1 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+    <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 w-full">
       <div id="controversial" 
-           class="filter-option p-4 border rounded-lg text-center cursor-pointer hover:bg-blue-100 transition-colors duration-300 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700"
+           class="filter-option p-2 border rounded-lg text-center cursor-pointer hover:bg-blue-100 transition-colors duration-300 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 transform hover:scale-105"
+           [ngClass]="{'bg-blue-500 text-white': activeFilter === 'controversial'}"
            (click)="ordinaPer('controversial')">
-        <p class="font-semibold text-gray-700 dark:text-white">Controversies</p>
+        <p class="font-semibold text-sm">Controversies</p>
       </div>
       <div id="unpopular" 
-           class="filter-option p-4 border rounded-lg text-center cursor-pointer hover:bg-blue-100 transition-colors duration-300 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700"
+           class="filter-option p-2 border rounded-lg text-center cursor-pointer hover:bg-blue-100 transition-colors duration-300 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 transform hover:scale-105"
+           [ngClass]="{'bg-blue-500 text-white': activeFilter === 'unpopular'}"
            (click)="ordinaPer('unpopular')">
-        <p class="font-semibold text-gray-700 dark:text-white">Unpopular</p>
+        <p class="font-semibold text-sm">Unpopular</p>
       </div>
       <div id="mainstream" 
-           class="filter-option p-4 border rounded-lg text-center cursor-pointer hover:bg-blue-100 transition-colors duration-300 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700"
+           class="filter-option p-2 border rounded-lg text-center cursor-pointer hover:bg-blue-100 transition-colors duration-300 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 transform hover:scale-105"
+           [ngClass]="{'bg-blue-500 text-white': activeFilter === 'mainstream'}"
            (click)="ordinaPer('mainstream')">
-        <p class="font-semibold text-gray-700 dark:text-white">Mainstream</p>
+        <p class="font-semibold text-sm">Mainstream</p>
       </div>
       <div id="all" 
-           class="filter-option p-4 border rounded-lg text-center cursor-pointer hover:bg-blue-100 transition-colors duration-300 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700"
+           class="filter-option p-2 border rounded-lg text-center cursor-pointer hover:bg-blue-100 transition-colors duration-300 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 transform hover:scale-105"
+           [ngClass]="{'bg-blue-500 text-white': activeFilter === 'all'}"
            (click)="ordinaPer('newest')">
-        <p class="font-semibold text-gray-700 dark:text-white">All Ideas</p>
+        <p class="font-semibold text-sm">All Ideas</p>
       </div>
     </div>
   </div>
@@ -29,7 +33,7 @@
 <!-- Bottone per creare una nuova idea -->
 <div class="container mx-auto px-4 py-6">
   <div class="flex justify-center mb-6">
-    <a [routerLink]="['/idea-creation-form']" class="bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-blue-700 transition duration-300 focus:outline-none">
+    <a [routerLink]="['/idea-creation-form']" class="bg-blue-600 text-white font-semibold px-6 py-2 rounded-lg hover:bg-blue-700 transition duration-300 focus:outline-none">
       Create a New Idea
     </a>
   </div>

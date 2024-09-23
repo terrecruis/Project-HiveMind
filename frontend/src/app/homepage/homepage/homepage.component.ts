@@ -22,6 +22,7 @@ export class HomepageComponent {
   router = inject(Router);
   ideas: IdeaItem[] = [];
   private orderSubscription: Subscription | undefined;
+  activeFilter: string = 'all'; 
 
   actualPage: number = 1;
   throttle = 0;
@@ -83,6 +84,7 @@ export class HomepageComponent {
 
   ordinaPer(order: SortingCriteria) {
     this.restService.changeOrder(order);
+    this.activeFilter = order;
   }
 
   reloadIdeas() {

@@ -7,10 +7,14 @@ export const authGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
   const toastr = inject(ToastrService);
   const router = inject(Router);
-  if(authService.isUserAuthenticated()){
+
+  if (authService.isUserAuthenticated()) {
     return true;
   } else {
-    toastr.warning("Please, login to access this feature", "Unauthorized!");
-    return router.parseUrl("/login"); //return a UrlTree
+    toastr.warning("Please, login to access this feature", "Unauthorized!", {
+      timeOut: 4000, 
+      progressBar: true, 
+    });
+    return router.parseUrl("/login"); 
   }
 };

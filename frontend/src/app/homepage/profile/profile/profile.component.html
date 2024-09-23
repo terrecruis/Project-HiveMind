@@ -1,26 +1,32 @@
 <div class="container mx-auto flex justify-center items-center h-screen">
-    <div class="w-full max-w-2xl bg-white shadow-lg rounded-lg overflow-hidden dark:bg-gray-800 dark:border-gray-700">
-      <!-- Foto Profilo -->
-      <div class="flex justify-center mt-8">
-        <img class="w-48 h-48 object-cover rounded-lg" src="https://via.placeholder.com/300" alt="Foto Profilo">
-      </div>
-  
-      <!-- Dettagli Profilo -->
-      <div class="text-center mt-6">
-        <!-- Email -->
-        <h2 class="text-2xl font-semibold text-gray-900 dark:text-white">Email</h2>
-        <p class="text-gray-700 dark:text-gray-300 text-lg">{{this.authService.user()}}</p>
-  
-        <!-- Descrizione -->
-        <div class="mt-6 px-8">
-          <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Descrizione</h3>
-          <p class="text-gray-700 dark:text-gray-300 mt-4 text-base leading-relaxed">
-            Sono uno sviluppatore appassionato con un amore per la tecnologia e l'innovazione. Mi piace lavorare su progetti che sfidano la mia creatività e migliorano le competenze tecniche.
-          </p>
-        </div>
-      </div>
-      <!-- Padding finale per spaziatura -->
-      <div class="pb-8"></div>
+  <div class="w-full max-w-2xl bg-white shadow-lg rounded-lg overflow-hidden dark:bg-gray-800 dark:border-gray-700 transition-transform duration-300 hover:shadow-xl">
+    <!-- Foto Profilo -->
+    <div class="flex justify-center mt-8">
+      <img class="w-48 h-48 object-cover rounded-full border-4 border-blue-500" src="https://www.dotitsrl.it/wp-content/uploads/2021/06/Cos%C3%A8-una-software-house-300x300.jpg" alt="Foto Profilo">
     </div>
-</div>
 
+    <!-- Dettagli Profilo -->
+    <div class="text-center mt-6 px-4">
+      <!-- Email -->
+      <p class="text-black text-lg">Email: {{ this.authService.user() }}</p>
+
+      <!-- Descrizione -->
+      <div class="mt-6">
+        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Descrizione</h3>
+        <p class="text-gray-700 dark:text-gray-300 mt-4 text-base leading-relaxed">
+          Sono uno sviluppatore appassionato con un amore per la tecnologia e l'innovazione. Mi piace lavorare su progetti che sfidano la mia creatività e migliorano le competenze tecniche.
+        </p>
+      </div>
+
+      <!-- Pulsante per modificare il profilo -->
+      <div class="mt-6">
+        <a href="/edit-profile" class="bg-blue-600 text-white font-semibold px-6 py-2 rounded-lg hover:bg-blue-700 transition duration-300">
+          Modifica Profilo
+        </a>
+      </div>
+    </div>
+    
+    <!-- Padding finale per spaziatura -->
+    <div class="pb-8"></div>
+  </div>
+</div>

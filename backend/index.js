@@ -38,7 +38,7 @@ const swaggerSpec = swaggerJSDoc({
   definition: {
     openapi: '3.1.0',
     info: {
-      title: 'WEBTECH’S HIVEMIND PROJECT API',
+      title: 'HIVEMIND PROJECT',
       version: '1.0.0',
     },
   },
@@ -56,3 +56,5 @@ app.use(commentRouter);
 app.use(homepageRouter);
 
 app.listen(PORT);
+
+console.log(`Server running on port ${PORT}`);
