@@ -1,13 +1,15 @@
-import { ApplicationConfig, provideZoneChangeDetection, importProvidersFrom } from '@angular/core';
+import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
-
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { authInterceptor } from './_interceptors/auth.interceptor';
-
 import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { provideToastr } from 'ngx-toastr';  // Importa ToastrModule
+import { provideToastr } from 'ngx-toastr'; // Importa ToastrModule
+import { MatIconModule } from '@angular/material/icon'; // Importa MatIconModule
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideMarkdown } from 'ngx-markdown';
+
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,8 +19,12 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     provideToastr(),
     provideHttpClient(
-      withFetch(), //use the Fetch API instead of XMLHttpRequests
+      withFetch(), // Utilizza l'API Fetch invece di XMLHttpRequests
       withInterceptors([authInterceptor])
-    )
+    ),
+    MatIconModule, // Aggiungi MatIconModule qui
+    provideAnimations(),
+    provideAnimationsAsync(),
+    provideMarkdown()
   ]
 };

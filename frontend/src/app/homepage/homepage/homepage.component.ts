@@ -1,39 +1,93 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { RouterLink, RouterLinkActive } from '@angular/router';
-import { MarkdownService } from '../../_services/markdown/markdown.service';
+import { Component, HostListener, Input, inject } from '@angular/core';
+import { IdeaContainerComponent } from '../idea-container/idea-container.component';
+import { NgClass, NgFor, NgIf } from '@angular/common';
+import { RestBackendService, SortingCriteria } from '../../_services/rest-backend/rest-backend.service';
+import { ToastrService } from 'ngx-toastr';
+import { Router, RouterLink } from '@angular/router';
+import { IdeaItem } from '../../_services/rest-backend/IdeaItem';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-homepage',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive],
+  imports: [IdeaContainerComponent, NgFor, MatIconModule, MatButtonModule, NgClass, NgIf, RouterLink],
   templateUrl: './homepage.component.html',
   styleUrls: ['./homepage.component.scss']
 })
-export class HomepageComponent implements OnInit {
-  ideas: any[] = [];
-  convertedIdeas: any[] = [];
+export class HomepageComponent {
+  restService = inject(RestBackendService);
+  toastr = inject(ToastrService);
+  router = inject(Router);
+  ideas: IdeaItem[] = [];
+  private orderSubscription: Subscription | undefined;
 
-  constructor(private router: Router, private markdownService: MarkdownService) { }
+  actualPage: number = 1;
+  throttle = 0;
+  distance = 2;
 
-  async ngOnInit(): Promise<void> {
-    // Simulazione di recupero dei dati
-    this.ideas = [
-      { id: '1', title: 'Titolo dell\'Idea 1', description: '**Descrizione dell\'idea 1**\n\n*Testo in corsivo*\n\n[Link esempio](https://example.com)' },
-      { id: '2', title: 'Titolo dell\'Idea 2', description: 'Descrizione dell\'idea 2' }
-    ];
-
-    // Convertire le descrizioni in HTML
-    this.convertedIdeas = await Promise.all(this.ideas.map(async (idea) => {
-      return {
-        ...idea,
-        description: await this.markdownService.convertToHtml(idea.description)
-      };
-    }));
+  ngOnInit() {
+    this.orderSubscription = this.restService.orderChanged.subscribe((order) => {
+      this.reloadIdeas();
+    });
   }
 
-  goToComments(ideaId: string): void {
-    this.router.navigate(['/comment-section', ideaId]);
+  ngAfterViewInit() {
+    this.actualPage = 1;
+    this.fetchIdeas();
+  }
+
+  fetchIdeas(pageNumber: number = 1) {
+    this.restService.getIdeaPage(pageNumber).subscribe({
+      next: (data) => {
+        console.log(data);
+        this.ideas = [...this.ideas, ...data];
+        this.actualPage++;
+        if (data.length === 0) {
+          this.toastr.info("No more ideas available", "End of Ideas");
+        }
+      },
+      error: (err) => {
+        if (err.status === 401) {
+          this.toastr.error("Your access token appears to be invalid. Login again", "Token expired");
+          this.router.navigateByUrl("/login");
+        } else {
+          this.toastr.error(err.message, err.statusText);
+        }
+      },
+      complete: () => { }
+    });
+  }
+
+  loadMore() {
+    this.fetchIdeas(this.actualPage);
+  }
+
+  @HostListener('window:scroll', ['$event'])
+  onScroll(event: Event) {
+    if (this.throttle > Date.now()) {
+      return;
+    }
+    const pos = document.documentElement.scrollTop + document.documentElement.clientHeight;
+    const max = document.documentElement.scrollHeight;
+    if (pos + this.distance >= max) {
+      this.throttle = Date.now() + 1000;
+      this.loadMore();
+    }
+  }
+
+  goToCreateIdea() {
+    this.router.navigateByUrl("/post");
+  }
+
+  ordinaPer(order: SortingCriteria) {
+    this.restService.changeOrder(order);
+  }
+
+  reloadIdeas() {
+    this.ideas = [];
+    this.actualPage = 1;
+    this.fetchIdeas();
   }
 }

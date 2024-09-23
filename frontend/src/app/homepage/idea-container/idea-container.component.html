@@ -1,0 +1,20 @@
+<div class="bg-white p-4 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
+  <markdown [data]="idea.title" class="text-xl font-semibold text-gray-900 dark:text-white" style="overflow-wrap: break-word;"></markdown>
+  <div class="font-semibold text-gray-400 dark:text-gray-300 mb-2">
+    {{ '@' }}{{ idea.UserUserName }}
+  </div>
+  <markdown [data]="idea.description" class="text-gray-700 dark:text-gray-300" style="overflow-wrap: break-word;"></markdown>
+  <div class="flex items-center mt-2">
+    <button mat-button class="flex items-center text-green-500 hover:text-green-600 border border-white rounded-lg px-3 py-1 transition duration-300" (click)="like()">
+      <mat-icon>thumb_up</mat-icon>
+      <span class="ml-1 text-green-500 font-bold">{{ idea.PositiveVotes }}</span>
+    </button>
+    
+    <button mat-button class="flex items-center text-red-500 hover:text-red-600 border border-white rounded-lg px-3 py-1 ml-4 transition duration-300" (click)="dislike()">
+      <mat-icon>thumb_down</mat-icon>
+      <span class="ml-1 text-red-500 font-bold">{{ idea.NegativeVotes }}</span>
+    </button>
+
+    <a [routerLink]="['/comment-section', idea.id]" class="ml-auto text-blue-500 hover:text-blue-600">Commenta</a>
+  </div>
+</div>

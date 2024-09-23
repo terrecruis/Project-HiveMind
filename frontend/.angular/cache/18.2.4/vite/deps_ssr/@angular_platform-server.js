@@ -1,18 +1,13 @@
 import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
-  AnimationDriver,
-  AnimationEngine,
-  AnimationRendererFactory,
-  AnimationStyleNormalizer,
-  NoopAnimationDriver,
-  WebAnimationsDriver,
-  WebAnimationsStyleNormalizer
-} from "./chunk-E33ZHRID.js";
+  NoopAnimationsModule,
+  provideNoopAnimations
+} from "./chunk-OHWZ7EZR.js";
+import "./chunk-E33ZHRID.js";
 import "./chunk-46JGTPQE.js";
 import {
   BrowserDomAdapter,
   BrowserModule,
-  DomRendererFactory2,
   EVENT_MANAGER_PLUGINS,
   EventManagerPlugin
 } from "./chunk-S4L4GIHN.js";
@@ -32,7 +27,6 @@ import {
 } from "./chunk-4HWACCY7.js";
 import {
   ALLOW_MULTIPLE_PLATFORMS,
-  ANIMATION_MODULE_TYPE,
   APP_ID,
   ApplicationRef,
   CSP_NONCE,
@@ -42,12 +36,10 @@ import {
   InjectionToken,
   Injector,
   NgModule,
-  NgZone,
   Optional,
   PLATFORM_ID,
   PLATFORM_INITIALIZER,
   Renderer2,
-  RendererFactory2,
   SSR_CONTENT_INTEGRITY_MARKER,
   TESTABILITY,
   Testability,
@@ -71,144 +63,6 @@ import {
   __async,
   __toESM
 } from "./chunk-NQ4HTGF6.js";
-
-// node_modules/@angular/platform-browser/fesm2022/animations.mjs
-var _InjectableAnimationEngine = class _InjectableAnimationEngine extends AnimationEngine {
-  // The `ApplicationRef` is injected here explicitly to force the dependency ordering.
-  // Since the `ApplicationRef` should be created earlier before the `AnimationEngine`, they
-  // both have `ngOnDestroy` hooks and `flush()` must be called after all views are destroyed.
-  constructor(doc, driver, normalizer) {
-    super(doc, driver, normalizer);
-  }
-  ngOnDestroy() {
-    this.flush();
-  }
-};
-_InjectableAnimationEngine.ɵfac = function InjectableAnimationEngine_Factory(__ngFactoryType__) {
-  return new (__ngFactoryType__ || _InjectableAnimationEngine)(ɵɵinject(DOCUMENT), ɵɵinject(AnimationDriver), ɵɵinject(AnimationStyleNormalizer));
-};
-_InjectableAnimationEngine.ɵprov = ɵɵdefineInjectable({
-  token: _InjectableAnimationEngine,
-  factory: _InjectableAnimationEngine.ɵfac
-});
-var InjectableAnimationEngine = _InjectableAnimationEngine;
-(() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(InjectableAnimationEngine, [{
-    type: Injectable
-  }], () => [{
-    type: Document,
-    decorators: [{
-      type: Inject,
-      args: [DOCUMENT]
-    }]
-  }, {
-    type: AnimationDriver
-  }, {
-    type: AnimationStyleNormalizer
-  }], null);
-})();
-function instantiateDefaultStyleNormalizer() {
-  return new WebAnimationsStyleNormalizer();
-}
-function instantiateRendererFactory(renderer, engine, zone) {
-  return new AnimationRendererFactory(renderer, engine, zone);
-}
-var SHARED_ANIMATION_PROVIDERS = [{
-  provide: AnimationStyleNormalizer,
-  useFactory: instantiateDefaultStyleNormalizer
-}, {
-  provide: AnimationEngine,
-  useClass: InjectableAnimationEngine
-}, {
-  provide: RendererFactory2,
-  useFactory: instantiateRendererFactory,
-  deps: [DomRendererFactory2, AnimationEngine, NgZone]
-}];
-var BROWSER_ANIMATIONS_PROVIDERS = [{
-  provide: AnimationDriver,
-  useFactory: () => new WebAnimationsDriver()
-}, {
-  provide: ANIMATION_MODULE_TYPE,
-  useValue: "BrowserAnimations"
-}, ...SHARED_ANIMATION_PROVIDERS];
-var BROWSER_NOOP_ANIMATIONS_PROVIDERS = [{
-  provide: AnimationDriver,
-  useClass: NoopAnimationDriver
-}, {
-  provide: ANIMATION_MODULE_TYPE,
-  useValue: "NoopAnimations"
-}, ...SHARED_ANIMATION_PROVIDERS];
-var _BrowserAnimationsModule = class _BrowserAnimationsModule {
-  /**
-   * Configures the module based on the specified object.
-   *
-   * @param config Object used to configure the behavior of the `BrowserAnimationsModule`.
-   * @see {@link BrowserAnimationsModuleConfig}
-   *
-   * @usageNotes
-   * When registering the `BrowserAnimationsModule`, you can use the `withConfig`
-   * function as follows:
-   * ```
-   * @NgModule({
-   *   imports: [BrowserAnimationsModule.withConfig(config)]
-   * })
-   * class MyNgModule {}
-   * ```
-   */
-  static withConfig(config) {
-    return {
-      ngModule: _BrowserAnimationsModule,
-      providers: config.disableAnimations ? BROWSER_NOOP_ANIMATIONS_PROVIDERS : BROWSER_ANIMATIONS_PROVIDERS
-    };
-  }
-};
-_BrowserAnimationsModule.ɵfac = function BrowserAnimationsModule_Factory(__ngFactoryType__) {
-  return new (__ngFactoryType__ || _BrowserAnimationsModule)();
-};
-_BrowserAnimationsModule.ɵmod = ɵɵdefineNgModule({
-  type: _BrowserAnimationsModule,
-  exports: [BrowserModule]
-});
-_BrowserAnimationsModule.ɵinj = ɵɵdefineInjector({
-  providers: BROWSER_ANIMATIONS_PROVIDERS,
-  imports: [BrowserModule]
-});
-var BrowserAnimationsModule = _BrowserAnimationsModule;
-(() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(BrowserAnimationsModule, [{
-    type: NgModule,
-    args: [{
-      exports: [BrowserModule],
-      providers: BROWSER_ANIMATIONS_PROVIDERS
-    }]
-  }], null, null);
-})();
-var _NoopAnimationsModule = class _NoopAnimationsModule {
-};
-_NoopAnimationsModule.ɵfac = function NoopAnimationsModule_Factory(__ngFactoryType__) {
-  return new (__ngFactoryType__ || _NoopAnimationsModule)();
-};
-_NoopAnimationsModule.ɵmod = ɵɵdefineNgModule({
-  type: _NoopAnimationsModule,
-  exports: [BrowserModule]
-});
-_NoopAnimationsModule.ɵinj = ɵɵdefineInjector({
-  providers: BROWSER_NOOP_ANIMATIONS_PROVIDERS,
-  imports: [BrowserModule]
-});
-var NoopAnimationsModule = _NoopAnimationsModule;
-(() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(NoopAnimationsModule, [{
-    type: NgModule,
-    args: [{
-      exports: [BrowserModule],
-      providers: BROWSER_NOOP_ANIMATIONS_PROVIDERS
-    }]
-  }], null, null);
-})();
-function provideNoopAnimations() {
-  return [...BROWSER_NOOP_ANIMATIONS_PROVIDERS];
-}
 
 // node_modules/@angular/platform-server/fesm2022/platform-server.mjs
 var import_rxjs = __toESM(require_cjs(), 1);
@@ -7363,7 +7217,7 @@ var require_MutationConstants = __commonJS({
 var require_Document = __commonJS({
   "external/npm/node_modules/domino/lib/Document.js"(exports, module) {
     "use strict";
-    module.exports = Document2;
+    module.exports = Document;
     var Node = require_Node();
     var NodeList = require_NodeList();
     var ContainerNode = require_ContainerNode();
@@ -7387,7 +7241,7 @@ var require_Document = __commonJS({
     var MUTATE = require_MutationConstants();
     var NAMESPACE = utils.NAMESPACE;
     var isApiWritable = require_config().isApiWritable;
-    function Document2(isHTML, address) {
+    function Document(isHTML, address) {
       ContainerNode.call(this);
       this.nodeType = Node.DOCUMENT_NODE;
       this.isHTML = isHTML;
@@ -7469,7 +7323,7 @@ var require_Document = __commonJS({
         localName
       };
     }
-    Document2.prototype = Object.create(ContainerNode.prototype, {
+    Document.prototype = Object.create(ContainerNode.prototype, {
       _setMutationHandler: {
         value: function(handler) {
           this.mutationHandler = handler;
@@ -7898,7 +7752,7 @@ var require_Document = __commonJS({
       },
       clone: {
         value: function clone() {
-          var d = new Document2(this.isHTML, this._address);
+          var d = new Document(this.isHTML, this._address);
           d._quirks = this._quirks;
           d._contentType = this._contentType;
           return d;
@@ -8035,7 +7889,7 @@ var require_Document = __commonJS({
       _templateDoc: {
         get: function() {
           if (!this._templateDocCache) {
-            var newDoc = new Document2(this.isHTML, this._address);
+            var newDoc = new Document(this.isHTML, this._address);
             this._templateDocCache = newDoc._templateDocCache = newDoc;
           }
           return this._templateDocCache;
@@ -8055,7 +7909,7 @@ var require_Document = __commonJS({
     });
     var eventHandlerTypes = ["abort", "canplay", "canplaythrough", "change", "click", "contextmenu", "cuechange", "dblclick", "drag", "dragend", "dragenter", "dragleave", "dragover", "dragstart", "drop", "durationchange", "emptied", "ended", "input", "invalid", "keydown", "keypress", "keyup", "loadeddata", "loadedmetadata", "loadstart", "mousedown", "mousemove", "mouseout", "mouseover", "mouseup", "mousewheel", "pause", "play", "playing", "progress", "ratechange", "readystatechange", "reset", "seeked", "seeking", "select", "show", "stalled", "submit", "suspend", "timeupdate", "volumechange", "waiting", "blur", "error", "focus", "load", "scroll"];
     eventHandlerTypes.forEach(function(type) {
-      Object.defineProperty(Document2.prototype, "on" + type, {
+      Object.defineProperty(Document.prototype, "on" + type, {
         get: function() {
           return this._getEventHandler(type);
         },
@@ -8197,7 +8051,7 @@ var require_HTMLParser = __commonJS({
   "external/npm/node_modules/domino/lib/HTMLParser.js"(exports, module) {
     "use strict";
     module.exports = HTMLParser;
-    var Document2 = require_Document();
+    var Document = require_Document();
     var DocumentType = require_DocumentType();
     var Node = require_Node();
     var NAMESPACE = require_utils().NAMESPACE;
@@ -11250,7 +11104,7 @@ var require_HTMLParser = __commonJS({
           return moreToDo;
         }
       };
-      var doc = new Document2(true, address);
+      var doc = new Document(true, address);
       doc._parser = htmlparser;
       doc._scripting_enabled = scripting_enabled;
       if (fragmentContext) {
@@ -16091,7 +15945,7 @@ var require_DOMImplementation = __commonJS({
   "external/npm/node_modules/domino/lib/DOMImplementation.js"(exports, module) {
     "use strict";
     module.exports = DOMImplementation;
-    var Document2 = require_Document();
+    var Document = require_Document();
     var DocumentType = require_DocumentType();
     var HTMLParser = require_HTMLParser();
     var utils = require_utils();
@@ -16130,7 +15984,7 @@ var require_DOMImplementation = __commonJS({
         return new DocumentType(this.contextObject, qualifiedName, publicId, systemId);
       },
       createDocument: function createDocument(namespace, qualifiedName, doctype) {
-        var d = new Document2(false, null);
+        var d = new Document(false, null);
         var e;
         if (qualifiedName) e = d.createElementNS(namespace, qualifiedName);
         else e = null;
@@ -16148,7 +16002,7 @@ var require_DOMImplementation = __commonJS({
         return d;
       },
       createHTMLDocument: function createHTMLDocument(titleText) {
-        var d = new Document2(true, null);
+        var d = new Document(true, null);
         d.appendChild(new DocumentType(d, "html"));
         var html = d.createElement("html");
         d.appendChild(html);
@@ -17070,13 +16924,6 @@ export {
   enableSsrProfiling as ɵenableSsrProfiling
 };
 /*! Bundled license information:
-
-@angular/platform-browser/fesm2022/animations.mjs:
-  (**
-   * @license Angular v18.2.4
-   * (c) 2010-2024 Google LLC. https://angular.io/
-   * License: MIT
-   *)
 
 @angular/platform-server/fesm2022/platform-server.mjs:
   (**

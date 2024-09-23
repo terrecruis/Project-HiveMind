@@ -6,6 +6,7 @@ import { SignupComponent } from './signup/signup/signup.component';
 import { HomepageComponent } from './homepage/homepage/homepage.component';
 import { IdeaCreationFormComponent } from './homepage/idea-creation-form/idea-creation-form.component';
 import { CommentSectionComponent } from './homepage/comment-section/comment-section.component';
+import { authGuard } from './_guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -17,7 +18,7 @@ export const routes: Routes = [
     path: "homepage",
     component: HomepageComponent,
     title: "Homepage",
-    // canActivate: [authGuard]  // Inserisci un guard se necess
+    canActivate: [authGuard]
   },
   {
     path: "comment-section/:id",
