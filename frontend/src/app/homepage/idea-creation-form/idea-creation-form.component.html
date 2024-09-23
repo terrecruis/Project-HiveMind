@@ -1,0 +1,31 @@
+<!-- Sezione per la creazione di un'idea -->
+<div id="createIdeaComponent" class="container mx-auto px-4 py-6">
+  <div class="max-w-lg mx-auto bg-white dark:bg-gray-800 shadow-md rounded-lg p-6">
+    <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4">Crea una nuova idea</h2>
+    
+    <!-- Form per creazione idea -->
+    <form id="ideaForm">
+      <!-- Titolo -->
+      <div class="mb-4">
+        <label for="ideaTitle" class="block text-gray-700 dark:text-gray-300">Titolo dell'idea</label>
+        <input type="text" id="ideaTitle" name="ideaTitle" class="w-full px-3 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" placeholder="Inserisci il titolo" required>
+      </div>
+      
+      <!-- Descrizione -->
+      <div class="mb-4">
+        <label for="ideaDescription" class="block text-gray-700 dark:text-gray-300">Descrizione</label>
+        <textarea id="ideaDescription" name="ideaDescription" rows="4" class="w-full px-3 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" placeholder="Descrivi la tua idea (fino a 400 caratteri)" maxlength="400" required></textarea>
+      </div>
+      
+      <!-- Pulsanti -->
+      <div class="flex justify-between">
+        <button type="submit" class="bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-blue-700 transition duration-300 focus:outline-none">
+          Invia Idea
+        </button>
+        <button type="button" (click)="onCancel()" class="bg-gray-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-gray-700 transition duration-300 focus:outline-none">
+          Annulla
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

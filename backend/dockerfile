@@ -1,20 +1,20 @@
-# Usa l'immagine ufficiale di Node.js come base
+# Usa un'immagine di base con Node.js
 FROM node:latest
 
 # Imposta la directory di lavoro all'interno del container
 WORKDIR /app
 
-# Copia il file package.json e package-lock.json nella directory di lavoro
-COPY package*.json ./
+# Copia il file package.json nella directory di lavoro
+COPY package.json .
 
-# Installa le dipendenze del progetto
+# Installa le dipendenze dell'applicazione
 RUN npm install
 
-# Copia tutti i file e le cartelle del progetto nella directory di lavoro del container
+# Copia il resto del codice nell'immagine
 COPY . .
 
-# Espone la porta sulla quale il server Express ascolta
+# Esponi la porta su cui l'applicazione ascolta
 EXPOSE 3000
 
-# Comando per avviare il server
+# Avvia l'applicazione quando il container viene eseguito
 CMD ["npm", "start"]

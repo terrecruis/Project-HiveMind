@@ -1,0 +1,3 @@
+GET http://localhost:3000/ideas
+Content-Type: application/json
+Authorization: Bearer yJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiZGF2aWRlIiwiaWF0IjoxNzE3Nzc2NzYyLCJleHAiOjE3MTc4NjMxNjJ9.yuyV97jT_syOTvqTgc61rhQvwZ9uHTSGwd1sKRvIqjA

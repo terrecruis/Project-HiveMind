@@ -1,0 +1,7 @@
+POST http://localhost:3000/comment/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiZGF2aWRlIiwiaWF0IjoxNzE3ODY0MTczLCJleHAiOjE3MTc5NTA1NzN9.o4iFIbNf0gD6CpL_kxzBXByCnumTLrp02utcNxLFdZA
+Content-Type: application/json
+
+{
+    "text": "This is a very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very long comment."
+}

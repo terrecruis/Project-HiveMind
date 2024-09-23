@@ -1,90 +1,94 @@
-import { Sequelize } from 'sequelize'; // Corretto import
-import { createModel as createVoteModel } from './vote.js';
-import { createModel as createCommentsModel } from './comment.js';
-import { createModel as createUsersModel } from './user.js';
-import { createModel as createIdeasModel } from './idea.js';
+import { Sequelize } from "sequelize";
+import { createModel as createUserModel } from "./User.js";
+import { createModel as createIdeaModel } from "./Idea.js";
+import { createModel as createVoteModel } from "./Vote.js";
+import { createModel as createCommentModel } from "./Comment.js";
 
-import 'dotenv/config'; //load environment variables
+import 'dotenv/config.js'; //read .env file and make it available in process.env
 
-// Initialize Sequelize with environment variables
-export const db = new Sequelize(process.env.DB_CONNECTION_URI, {
-    dialect: process.env.DIALECT 
+export const database = new Sequelize(process.env.DB_CONNECTION_URI, {
+  dialect: process.env.DIALECT
 });
 
-// Create tables
-createUsersModel(db);
-createIdeasModel(db);
-createCommentsModel(db);
-createVoteModel(db);
+createUserModel(database);
+createIdeaModel(database);
+createVoteModel(database);
+createCommentModel(database);
 
-// Export models
-export const { idea, user, vote, comment } = db.models; 
+export const {User, Idea, Vote, Comment} = database.models;
 
-// Configure relationships
-user.hasMany(idea);
-idea.belongsTo(user);
 
-idea.hasMany(comment);
-idea.hasMany(vote);
+//associations configuration
+// User can have many Ideas
+User.hasMany(Idea);
+Idea.belongsTo(User);
 
-vote.belongsTo(idea);
-vote.belongsTo(user);
+// Idea can have many Votes
+Idea.hasMany(Vote);
+Vote.belongsTo(Idea);
 
-comment.belongsTo(idea);
-comment.belongsTo(user);
+// Vote belongs to User
+Vote.belongsTo(User);
 
-// Loading with votes
-idea.addScope('withVotes', {
-    include: [vote]
+// Comment belongs to Idea and User
+Comment.belongsTo(Idea);
+Comment.belongsTo(User);
+Idea.hasMany(Comment);
+
+
+// Add eager loading to include votes when fetching ideas
+Idea.addScope('withVotes', {
+  include: [Vote]
 });
 
-// Loading with numbers of votes
-idea.addScope('withVotesCount', {
-    attributes: {
-        include: [
-            [Sequelize.fn('COUNT', Sequelize.col('Votes.IdeaId')), 'TotalVotes'],
-            [Sequelize.fn('SUM', Sequelize.literal('CASE WHEN Votes.value = 1 THEN 1 ELSE 0 END')), 'PositiveVotes'],
-            [Sequelize.fn('SUM', Sequelize.literal('CASE WHEN Votes.value = 0 THEN 1 ELSE 0 END')), 'NegativeVotes'],
-            [Sequelize.literal('SUM(CASE WHEN Votes.value = 1 THEN 1 ELSE 0 END) - SUM(CASE WHEN Votes.value = 0 THEN 1 ELSE 0 END)'), 'score']
-        ]
-    },
+// Add eager loading to include number of votes when fetching ideas
+Idea.addScope('withVotesCount', {
+  attributes: {
     include: [
-        {
-            model: vote,
-            attributes: [],
-            duplicating: false
-        }
-    ],
-    group: ['idea.id']
+      [Sequelize.fn('COUNT', Sequelize.col('Votes.IdeaId')), 'TotalVotes'],
+      [Sequelize.fn('SUM', Sequelize.literal('CASE WHEN Votes.value = 1 THEN 1 ELSE 0 END')), 'PositiveVotes'],
+      [Sequelize.fn('SUM', Sequelize.literal('CASE WHEN Votes.value = 0 THEN 1 ELSE 0 END')), 'NegativeVotes'],
+      [Sequelize.literal('SUM(CASE WHEN Votes.value = 1 THEN 1 ELSE 0 END) - SUM(CASE WHEN Votes.value = 0 THEN 1 ELSE 0 END)'), 'score']
+    ]
+  },
+  include: [
+    {
+      model: Vote,
+      attributes: [],
+      duplicating: false
+    }
+  ],
+  group: ['Idea.id']
 });
 
-// Loading with comments
-idea.addScope('full', {  
-    attributes: {
-        include: [
-            [Sequelize.fn('COUNT', Sequelize.col('Votes.IdeaId')), 'TotalVotes'],
-            [Sequelize.fn('SUM', Sequelize.literal('CASE WHEN Votes.value = 1 THEN 1 ELSE 0 END')), 'PositiveVotes'],
-            [Sequelize.fn('SUM', Sequelize.literal('CASE WHEN Votes.value = 0 THEN 1 ELSE 0 END')), 'NegativeVotes'],
-            [Sequelize.literal('SUM(CASE WHEN Votes.value = 1 THEN 1 ELSE 0 END) - SUM(CASE WHEN Votes.value = 0 THEN 1 ELSE 0 END)'), 'score']
-        ]
-    },
+// Include comments
+Idea.addScope('full', {  
+  attributes: {
     include: [
-        {
-            model: vote,
-            attributes: [],
-            duplicating: false
-        },
-        {
-            model: comment, // Include comments
-            duplicating: true
-        }
-    ],
-    group: ['idea.id', 'comments.id']
+      [Sequelize.fn('COUNT', Sequelize.col('Votes.IdeaId')), 'TotalVotes'],
+      [Sequelize.fn('SUM', Sequelize.literal('CASE WHEN Votes.value = 1 THEN 1 ELSE 0 END')), 'PositiveVotes'],
+      [Sequelize.fn('SUM', Sequelize.literal('CASE WHEN Votes.value = 0 THEN 1 ELSE 0 END')), 'NegativeVotes'],
+      [Sequelize.literal('SUM(CASE WHEN Votes.value = 1 THEN 1 ELSE 0 END) - SUM(CASE WHEN Votes.value = 0 THEN 1 ELSE 0 END)'), 'score']
+    ]
+  },
+  include: [
+    {
+      model: Vote,
+      attributes: [],
+      duplicating: false
+    },
+    {
+      model: Comment, // Include comments
+      duplicating: true
+    }
+  ],
+  group: ['Idea.id', 'Comments.id']
 });
 
-// Sync database with models and create schema and tables
-db.sync().then(() => {
-    console.log("Database synced correctly");
-}).catch(err => {
-    console.error("Error with database synchronization: " + err.message);
+
+//synchronize schema (creates missing tables)
+database.sync().then( () => {
+  console.log("Database synced correctly");
+}).catch( err => {
+  console.err("Error with database synchronization: " + err.message);
 });

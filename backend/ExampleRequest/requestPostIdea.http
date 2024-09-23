@@ -1,0 +1,8 @@
+POST http://localhost:3000/ideas
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiZGF2aWRlIiwiaWF0IjoxNzE4OTY0NTQxLCJleHAiOjE3MTkwNTA5NDF9.qu121ScLGASn-Dkx-gXFtzYNzRUa_gJYGSYn5S6LvnQ
+
+{
+    "title": "My Awesome Idea",
+    "description": "This is my very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very very long amazing idea that will change the world!"
+}

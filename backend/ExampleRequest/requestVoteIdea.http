@@ -1,0 +1,7 @@
+POST http://localhost:3000/vote/6
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiZGF2aWRlIiwiaWF0IjoxNzE1Nzc3NTkzLCJleHAiOjE3MTU4NjM5OTN9.6zmgBnM60o9DYVtLqGD_PJmb12A_k5MANH-mn6tE8d4
+
+{
+    "value": "false"
+}

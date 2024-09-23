@@ -1,1 +1,145 @@
-/* You can add global styles to this file, and also import other style files */
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// Define the theme object.
+$frontend-theme: mat.define-theme((
+  color: (
+    theme-type: light,
+    primary: mat.$azure-palette,
+    tertiary: mat.$blue-palette,
+  ),
+  density: (
+    scale: 0,
+  )
+));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+:root {
+  @include mat.all-component-themes($frontend-theme);
+}
+
+// Comment out the line below if you want to use the pre-defined typography utility classes.
+// For more information: https://material.angular.io/guide/typography#using-typography-styles-in-your-application.
+// @include mat.typography-hierarchy($frontend-theme);
+
+// Comment out the line below if you want to use the deprecated `color` inputs.
+// @include mat.color-variants-backwards-compatibility($frontend-theme);
+/* Importa Tailwind e altri stili globali */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import 'ngx-toastr/toastr';
+
+/* Toast Notifications */
+.toast-success {
+  @apply bg-teal-500;
+}
+
+.toast-error {
+  background-color: #BD362F;
+}
+
+.toast-info {
+  background-color: #2F96B4;
+}
+
+.toast-warning {
+  background-color: #F89406;
+}
+
+.toast-top-right {
+  top: 50px;
+  right: 30px;
+  margin-top: 100px;
+}
+
+@media (max-width: 575.98px) {
+  .toast-top-right {
+    top: 0;
+    right: 0;
+    left: 0; /* Centra il toast */
+    margin: auto; /* Centra il toast */
+    width: 300px;
+  }
+
+  .toast-container.toast-top-right .toast {
+    width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* Link Styles */
+a.link {
+  @apply underline text-teal-600 dark:text-teal-400 hover:text-teal-700 visited:text-teal-800 dark:visited:text-amber-400;
+}
+
+/* Form Error */
+.form-error {
+  @apply text-red-600 dark:text-red-400 text-sm pt-2;
+}
+
+/* Global Styles */
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+body {
+  background-color: #f0f4f8; /* Cambia il colore di sfondo per una tonalità più chiara */
+  color: #333; /* Colore del testo predefinito */
+  line-height: 1.6;
+}
+
+/* Pulsanti */
+button {
+  @apply bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition;
+}
+
+/* Card Component */
+.card {
+  @apply bg-white shadow-lg rounded-lg p-4 mb-4;
+}
+
+/* Responsività del Layout */
+@media (max-width: 768px) {
+  .container {
+    @apply px-4;
+  }
+
+  .header {
+    @apply text-center;
+  }
+
+  .nav {
+    @apply flex flex-col items-center;
+  }
+
+  .nav a {
+    @apply px-2 py-1;
+  }
+}
+
+@media (min-width: 769px) {
+  .header {
+    @apply flex justify-between items-center;
+  }
+
+  .nav {
+    @apply flex space-x-4;
+  }
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
