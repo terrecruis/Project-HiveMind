@@ -1,8 +1,8 @@
 import { Sequelize } from "sequelize";
 import { createModel as createUserModel } from "./user.js";
-import { createModel as createIdeaModel } from "./Idea.js";
-import { createModel as createVoteModel } from "./Vote.js";
-import { createModel as createCommentModel } from "./Comment.js";
+import { createModel as createIdeaModel } from "./idea.js";
+import { createModel as createVoteModel } from "./vote.js";
+import { createModel as createCommentModel } from "./comment.js";
 
 import 'dotenv/config.js'; //read .env file and make it available in process.env
 

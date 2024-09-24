@@ -1,4 +1,4 @@
-import { Idea, Vote, Comment } from "../models/Database.js";
+import { Idea, Vote, Comment } from "../models/database.js";
 
 export class IdeaController {
   

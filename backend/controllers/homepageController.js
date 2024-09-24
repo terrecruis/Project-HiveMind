@@ -1,4 +1,4 @@
-import { Idea } from "../models/Database.js";
+import { Idea } from "../models/database.js";
 import sequelize from "sequelize";
 
 export class HomepageController {

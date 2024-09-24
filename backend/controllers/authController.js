@@ -1,4 +1,4 @@
-import { User, Idea, Vote } from "../models/Database.js";
+import { User, Idea, Vote } from "../models/database.js";
 import Jwt from "jsonwebtoken";
 import { Op } from "sequelize";
 
