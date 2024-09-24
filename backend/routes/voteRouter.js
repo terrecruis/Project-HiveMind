@@ -1,5 +1,5 @@
 import express from "express";
-import { IdeaController } from "../controllers/IdeaController.js";
+import { IdeaController } from "../controllers/ideaController.js";
 import { ensureUsersVoteOnlyOtherUsersIdeasNotAlreadyVoted } from "../middleware/authorization.js";
 
 export const voteRouter = new express.Router();

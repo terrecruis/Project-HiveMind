@@ -28,13 +28,16 @@ export class HomepageComponent {
   throttle = 0;
   distance = 2;
 
+
+  //documentation : https://angular.io/guide/lifecycle-hooks
+  
   ngOnInit() {
     this.orderSubscription = this.restService.orderChanged.subscribe((order) => {
       this.reloadIdeas();
     });
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit() { 
     this.actualPage = 1;
     this.fetchIdeas();
   }

@@ -1,5 +1,5 @@
 import express from "express";
-import { IdeaController } from "../controllers/IdeaController.js";
+import { IdeaController } from "../controllers/ideaController.js";
 import { ensureIdeaDoesntExeedMaxLength } from "../middleware/validIdea.js";
 
 export const ideaRouter = new express.Router();

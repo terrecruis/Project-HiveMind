@@ -1,5 +1,5 @@
 import express from "express";
-import { IdeaController } from "../controllers/IdeaController.js";
+import { IdeaController } from "../controllers/ideaController.js";
 
 export const commentRouter = new express.Router();
 

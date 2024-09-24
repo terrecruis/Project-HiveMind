@@ -22,7 +22,7 @@ export const appConfig: ApplicationConfig = {
       withFetch(), // Utilizza l'API Fetch invece di XMLHttpRequests
       withInterceptors([authInterceptor])
     ),
-    MatIconModule, // Aggiungi MatIconModule qui
+    MatIconModule,
     provideAnimations(),
     provideAnimationsAsync(),
     provideMarkdown()
