@@ -14,7 +14,7 @@ git clone https://github.com/terrecruis/Project-HiveMind
 ## Launch
 you can launch the application by running the command
 ```sh
-docker-compose up
+docker-compose up --build
 ```
 
 Make sure you are in the desired directory before running these commands.
