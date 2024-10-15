@@ -2,7 +2,7 @@ import { createRequire } from 'module';const require = createRequire(import.meta
 import {
   MatCommonModule,
   coerceBooleanProperty
-} from "./chunk-UTOQ4ULW.js";
+} from "./chunk-QFSRQCXX.js";
 import "./chunk-4HWACCY7.js";
 import {
   ChangeDetectionStrategy,

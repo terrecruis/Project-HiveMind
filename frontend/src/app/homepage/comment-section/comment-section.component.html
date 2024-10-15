@@ -19,7 +19,7 @@
       <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Commenti</h3>
 
       <!-- Sezione Commenti con Scroll -->
-      <div class="overflow-auto max-h-96 mb-4 border border-gray-300 dark:border-gray-600 rounded-lg p-4">
+      <div class="overflow-auto max-h-96 mb-4 border border-gray-300 dark:border-gray-600 rounded-lg p-4 break-words">
         <div *ngIf="idea?.Comments?.length === 0" class="text-gray-600 dark:text-gray-400 text-center">
           Non ci sono commenti per questa idea.
         </div>
@@ -29,7 +29,7 @@
             {{ comment.UserUserName }} 
             <span class="text-gray-500 dark:text-gray-400 text-sm">({{ comment.createdAt | date: 'short' }})</span>
           </p>
-          <p class="text-gray-900 dark:text-white">{{ comment.text }}</p>
+          <p class="text-gray-900 dark:text-white break-words">{{ comment.text }}</p>
         </div>
       </div>
 
